@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+// Commande pour générer le code : python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. hello.proto
+
+package hello;
+
+service HelloService {
+  // Pattern unaire : une requete, une reponse
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string message = 1;
+}

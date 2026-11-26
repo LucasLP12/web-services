@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://calculette"
+                  targetNamespace="http://calculette"
+                  name="AdditionService">
+
+  <wsdl:types>
+    <xs:schema targetNamespace="http://calculette" elementFormDefault="qualified">
+      <xs:element name="additionner">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="entier1" type="xs:int"/>
+            <xs:element name="entier2" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="additionnerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="resultat1" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+
+  <wsdl:message name="additionnerRequest">
+    <wsdl:part element="tns:additionner" name="params"/>
+  </wsdl:message>
+  <wsdl:message name="additionnerResponse">
+    <wsdl:part element="tns:additionnerResponse" name="params"/>
+  </wsdl:message>
+
+  <wsdl:portType name="AdditionServicePortType">
+    <wsdl:operation name="additionner">
+      <wsdl:input message="tns:additionnerRequest"/>
+      <wsdl:output message="tns:additionnerResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="AdditionServiceBinding" type="tns:AdditionServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="additionner">
+      <soap:operation soapAction="urn:additionner"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="AdditionService">
+    <wsdl:port binding="tns:AdditionServiceBinding" name="AdditionServicePort">
+      <soap:address location="http://localhost:8080/axis2/services/AdditionService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
